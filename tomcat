@@ -1,0 +1,58 @@
+---
+- name: insatll tomcat10 on obuntu 22
+  hosts: all
+  become: yes
+  tasks: 
+    - name: installing java
+      ansible.builtin.apt:
+        name: openjdk-11-jdk
+        update_cache: yes
+        state: present
+    - name: create tomcat group
+      ansible.builtin.group:
+        name: tomact
+        state: present
+    - name: crete tomcat user
+      ansible.builtin.user:
+        name: tomcat
+        create_home: yes
+        group: tomcat
+        home: /opt/tomcat
+        shell: /bin/false
+        state: present
+    - name: extrct tomcat10.0.27
+      ansible.builtin.unarchive:
+        src: https://www-eu.apache.org/dist/tomcat/tomcat-10/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz 
+        remote_src: yes
+        dest: /opt/tomcat
+        owner: tomcat
+        group: tomcat
+    - name: create a symboliclink
+      ansible.builtin.file:
+        src: /opt/tomcat/apache-tomcat-10.0.27
+        dest: /opt/tomcat/latest
+        state: link
+    - name: change the permissions
+      ansible.builtin.file:
+        recurse: yes
+        dest : /opt/tomcat
+        group: tomcat
+        owner: tomcat
+        state: directory
+    - name: add excutive permissions to shell file
+      ansible.builtin.command:
+        name: sudo sh -c 'chmod +x /opt/tomcat/latest/bin/*.sh'
+    - name: create a systemd unit file
+      ansible.builtin.copy:
+        src: tomcat.service
+        dest: /etc/systemd/system/tomcat.service
+        owner: tomcat
+        group: tomcat
+    - name: reload daemon and start tomcat service
+      ansible.builtin.service:
+        daemon_reload: yes
+        enabled: yes
+        state: started
+
+
+         
