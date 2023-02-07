@@ -20,16 +20,14 @@
         home: /opt/tomcat
         shell: /bin/false
         state: present
-    - name: extrct tomcat10.0.27
+    - name: extrct tomcat 10.1.5 
       ansible.builtin.unarchive:
-        src: https://www-eu.apache.org/dist/tomcat/tomcat-10/v10.0.27/bin/apache-tomcat-10.0.27.tar.gz
+        src: https://www-eu.apache.org/dist/tomcat/tomcat-10/v10.1.5/bin/apache-tomcat-10.1.5.tar.gz
         remote_src: yes
         dest: /opt/tomcat
-        owner: tomcat
-        group: tomcat
     - name: create a symboliclink
       ansible.builtin.file:
-        src: /opt/tomcat/apache-tomcat-10.0.27
+        src: /opt/tomcat/apache-tomcat-10.1.5 
         dest: /opt/tomcat/latest
         state: link
     - name: change the permissions
@@ -50,9 +48,6 @@
     - name: reload daemon and start tomcat service
       ansible.builtin.systemd:
         name: tomcat.service
-        daemon_reload: true
-        enabled: true
+        daemon_reload: yes
+        enabled: yes
         state: started
-
-
-         
