@@ -48,7 +48,8 @@
         owner: tomcat
         group: tomcat
     - name: reload daemon and start tomcat service
-      ansible.builtin.service:
+      ansible.builtin.systemd:
+        name: tomcat
         daemon_reload: yes
         enabled: yes
         state: started
