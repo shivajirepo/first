@@ -40,8 +40,7 @@
         owner: tomcat
         state: directory
     - name: add excutive permissions to shell file
-      ansible.builtin.command:
-        name: sudo sh -c 'chmod +x /opt/tomcat/latest/bin/*.sh'
+      ansible.builtin.command: sudo sh -c 'chmod +x /opt/tomcat/latest/bin/*.sh'
     - name: create a systemd unit file
       ansible.builtin.copy:
         src: tomcat.service
