@@ -22,7 +22,7 @@
         state: present
     - name: extrct tomcat10.0.27
       ansible.builtin.unarchive:
-        src: https://www-eu.apache.org/dist/tomcat/tomcat-10/v10.0.27/bin/apache-tomcat-10.0.27.tar.gz 
+        src: https://www-eu.apache.org/dist/tomcat/tomcat-10/v10.0.27/bin/apache-tomcat-10.0.27.tar.gz
         remote_src: yes
         dest: /opt/tomcat
         owner: tomcat
@@ -49,7 +49,7 @@
         group: tomcat
     - name: reload daemon and start tomcat service
       ansible.builtin.systemd:
-        name: tomcat
+        name: tomcat.service
         daemon_reload: true
         enabled: true
         state: started
