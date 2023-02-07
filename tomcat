@@ -10,7 +10,7 @@
         state: present
     - name: create tomcat group
       ansible.builtin.group:
-        name: tomact
+        name: tomcat
         state: present
     - name: crete tomcat user
       ansible.builtin.user:
@@ -22,7 +22,7 @@
         state: present
     - name: extrct tomcat10.0.27
       ansible.builtin.unarchive:
-        src: https://www-eu.apache.org/dist/tomcat/tomcat-10/v${VERSION}/bin/apache-tomcat-${VERSION}.tar.gz 
+        src: https://www-eu.apache.org/dist/tomcat/tomcat-10/v10.0.27/bin/apache-tomcat-10.0.27.tar.gz 
         remote_src: yes
         dest: /opt/tomcat
         owner: tomcat
