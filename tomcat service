@@ -1,0 +1,53 @@
+---
+- name: install tomcat10 on obuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: installing java
+      ansible.builtin.apt:
+        name: openjdk-11-jdk
+        update_cache: yes
+        state: present
+    - name: create a tomcat user
+      ansible.builtin.user:
+        user: tomcat
+        group: tomcat
+        create_home: yes
+        home: /opt/tomcat
+        shell: /bin/false
+        state: yes
+    - name: create a tomcat group
+      ansible.builtin.group:
+        system: true
+    - name: extract tomcat 10.0.27
+      ansible.builtin.unarhive:
+        src: https://www-eu.apache.org/dist/tomcat/tomcat-10/v10.0.27/bin/apache-tomcat-10.0.27.tar.gz
+        dest:  /opt/tomcat
+        remote_src: yes
+    - name: create a symbolic between files
+      ansible.builtin.file:
+        recurse: yes
+        group: tomcat
+        owner: tomcat
+        src:  /opt/tomcat/apache-tomcat-10.0.27
+        dest: /opt/tomcat/latest
+        state: link
+    - name: change the permissions to tomcat
+      ansible.builtin.file:
+        recuse: yes
+        dest: /opt/tomcat
+        owner: tomcat
+        group: tomcat
+        state: directory     
+    - name: add excutive permissions to shell file
+      ansible.builtin.command:  sh -c 'chmod +x /opt/tomcat/latest/bin/*.sh'
+    - name : crete a systemd unit file
+      ansible.buitin.copy:
+        dest: /etc/systemd/system/tomcat.service
+        src: tomcat.service
+        owner: tomcat
+        group: tomcat
+    - name: daemond reload and start tomcar
+      ansible.builtin.sysytemd:
+        daemon_reload: true
+        state: restarted 

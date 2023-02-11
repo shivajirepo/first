@@ -20,4 +20,4 @@ ExecStart=/opt/tomcat/latest/bin/startup.sh
 ExecStop=/opt/tomcat/latest/bin/shutdown.sh
 
 [Install]
-WantedBy=multi-user.targe
+WantedBy=multi-user.target
