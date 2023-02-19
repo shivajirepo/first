@@ -1,0 +1,16 @@
+---
+pool:
+  name: 'azure pipelines'
+  VmImage: ubuntu latest
+
+trigger:
+  - master
+  
+steps:
+  - task: maven@3
+    inputs:
+      mavenPOMFile: 'pom.xml'
+      goals: 'package'
+      publishJUnitResults: true
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      JDKVersionOption: '1.8'
