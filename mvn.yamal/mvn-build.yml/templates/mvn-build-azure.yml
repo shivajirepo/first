@@ -1,0 +1,12 @@
+---
+pool:
+  name: 'azure pipelines'
+  VmImage: 'ubuntu-latest'
+trigger:
+  - main
+extends:
+  template: ./templates/mvn-build-azure.yml
+  parameters:
+    branch: 'master'
+    JdKVersion: '1.8'
+    VmImage: 'ubuntu-18.04'
