@@ -4,8 +4,8 @@ pool:
   VmImage: ubuntu latest
 
 trigger:
-  - master
-  
+  - main
+
 steps:
   - task: maven@3
     inputs:
