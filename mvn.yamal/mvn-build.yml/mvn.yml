@@ -16,7 +16,7 @@ trigger:
 
 steps:
   - task:
-      name: Maven@
+      name: Maven@3
       inputs:
         mavenPOMFile: 'pom.xml'
         goals: 'package'
